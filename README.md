@@ -68,16 +68,19 @@ is saved in your browser.
    correct answer is not always in the same position.
 
 The model chain is a reliability fallback, not a multi-model pipeline:
-exactly one model writes each answer, in this order — free
-`google/gemma-4-26b-a4b-it:free` on OpenRouter, then `openai/gpt-6-luna` on
-Vikey, then `deepseek/deepseek-v4-flash` on Vikey. Each tier has a cooldown
-after failures (429: Retry-After or 300s, capped at 900s; 401/403: 1 hour;
-402/404: 30 minutes; 5xx/timeout: 60s) and a paid daily cap (300 answers)
-bounds the worst-case bill. See `docs/architecture.md` for the full detail.
+exactly one model writes each answer, in this order — `openai/gpt-6-luna`
+on Vikey, then `deepseek/deepseek-v4-flash` on Vikey. The chain is
+Vikey-only (changed 2026-11-07): the OpenRouter free Gemma tier was
+dropped because its upstream shared pool rate-limits constantly (HTTP 429),
+which made whole generations fail whenever Vikey also hiccupped. Each tier
+has a cooldown after failures (429: Retry-After or 300s, capped at 900s;
+401/403: 1 hour; 402/404: 30 minutes; 5xx/timeout: 60s) and a paid daily
+cap (300 answers) bounds the worst-case bill. See `docs/architecture.md`
+for the full detail.
 
 ## API
 
-- `GET /health` — `{"status": "ok", "version": "1.1.0", "chain": [...]}`.
+- `GET /health` — `{"status": "ok", "version": "1.2.0", "chain": [...]}`.
 - `POST /api/generate` — body `{"topic": "...", "num_questions": 10,
   "language": "en"}` (num_questions 5-10, language en or id). Returns
   `{"quiz": {...}}`. The full quiz JSON schema is documented in
@@ -100,14 +103,16 @@ bounds the worst-case bill. See `docs/architecture.md` for the full detail.
 
 ## Key decisions
 
-- **Free model first, paid as fallback.** The free Gemma tier on OpenRouter
-  costs nothing, so most quizzes are free — when it is not rate-limited.
-  The paid fallbacks exist only so a rate limit or outage on the free tier
-  does not leave the user with nothing. A paid quiz generation is one LLM
-  call: roughly Rp 9 (DeepSeek V4 Flash) to Rp 15 (GPT-6 Luna) at the listed
-  per-token prices for a typical input (~2,700 tokens of prompt + sources)
-  and output (~3,500 tokens of JSON) — an estimate from the price list, not
-  a measured bill. The paid daily cap (300 calls) bounds the worst case.
+- **Vikey-only, no free tier.** The chain is GPT-6 Luna first, DeepSeek V4
+  Flash as the fallback, both on Vikey. The OpenRouter free Gemma tier was
+  removed 2026-11-07 because its upstream shared pool rate-limits
+  constantly (HTTP 429 on nearly every attempt), which made whole
+  generations fail whenever Vikey also hiccupped. A paid quiz generation
+  is one LLM call: roughly Rp 9 (DeepSeek V4 Flash) to Rp 15 (GPT-6 Luna)
+  at the listed per-token prices for a typical input (~2,700 tokens of
+  prompt + sources) and output (~3,500 tokens of JSON) — an estimate from
+  the price list, not a measured bill. The paid daily cap (300 calls)
+  bounds the worst case.
 - **No vector database, no framework.** Retrieval is plain web search plus
   code validation. A vector database would add a hosted dependency and cost
   for a demo whose corpus is the live web, not a fixed document set.
@@ -173,17 +178,20 @@ see "How generation works" and the `/api/jobs` endpoints above.)
 - **Bing's redirect URLs need resolving.** Bing result links are
   `bing.com/ck/a?...` redirects, not the article URL, so a Bing fallback
   would need an extra resolution step before fetching.
-- **The free model tier rate-limits.** The OpenRouter free Gemma tier
-  returned 429 on every sample-generation attempt, which is exactly why the
-  fallback chain exists — the paid Vikey tiers answered instead. Nothing to
-  fix, but it confirms the chain order matters more than the free tier's raw
-  speed.
+- **The free model tier rate-limits — so it was removed.** The OpenRouter
+  free Gemma tier returned 429 on nearly every sample-generation attempt,
+  and on 2026-11-07 it was rate-limited at the same moment both Vikey
+  tiers returned empty responses, so a live job failed with "All models
+  failed" even though nothing was misconfigured. The fix was to drop the
+  free tier entirely: the chain is now Vikey-only (GPT-6 Luna, then
+  DeepSeek V4 Flash), and a retry of the same generation succeeded at
+  once. Reliability beats free when the free tier is the thing failing.
 - **The paid tiers are slow and flaky on long generations.** A 12-question
   JSON is a long output: GPT-6 Luna timed out twice at the old 40-second
   limit and once at 90 seconds, and DeepSeek V4 Flash timed out once and
-  returned a 502 once. The fixes were raising the per-tier timeouts
-  (OpenRouter 25s to 60s, Vikey 40s to 90s) and raising max_tokens from
-  4,000 to 8,000 — a 4,000-token limit cut the JSON off mid-string. A
+  returned a 502 once. The fixes were raising the Vikey per-tier timeout
+  from 40s to 90s and raising max_tokens from 4,000 to 8,000 — a 4,000-token
+  limit cut the JSON off mid-string. A
   response cut off by the token limit is now treated as a failed tier so
   the chain moves on instead of handing a truncated blob to the validator.
 - **A literal JSON example in the repair prompt broke Python's `.format()`.**
