@@ -12,7 +12,7 @@ User ──► Cloudflare Pages (static web/) ──► Render (FastAPI server/m
                                             │
                                             ├─► quizgen/search.py ──► DuckDuckGo HTML
                                             ├─► quizgen/llm_client.py ──► Vikey Luna / Flash
-                                            │                          (Vikey-only since v1.2.0)
+                                            │                          └─► OpenRouter DeepSeek (backup)
                                             └─► quizgen/validator.py (V00-V10, pure code)
 ```
 
@@ -94,11 +94,15 @@ each answer, in this order:
    per 1M tokens — the price list in the code; the Vikey dashboard lists
    Rp 1,350 in / Rp 5,400 out for the v4.1 variant, so the estimate is a
    lower bound).
+3. OpenRouter `deepseek/deepseek-v4-flash` (paid, ~/bin/bash.0002/answer;
+   last resort only, runs only if both Vikey tiers fail).
 
-The chain is Vikey-only since v1.2.0 (2026-11-07): the OpenRouter free
+The chain is Vikey-first since v1.3.0 (2026-11-07). The OpenRouter free
 Gemma tier was removed because its upstream shared pool rate-limits
-constantly (HTTP 429), which made whole generations fail whenever Vikey
-also hiccupped.
+constantly (HTTP 429). Vikey itself then returned empty responses from
+this Render service twice in one afternoon even though the same key
+worked from the Section 3 service, so a Vikey-only chain (v1.2.0) left
+the generator dead and the paid DeepSeek backup was added.
 
 Per-tier cooldowns: 429 → Retry-After or 300s (capped 900s); 401/403 →
 3600s; 402 → 1800s; 404 → 1800s; 5xx/timeout → 60s. A response cut off by
@@ -181,7 +185,7 @@ samples only"). With no `API_BASE` configured the chip goes straight to
 - Backend: Render free web service from this repo, build
   `pip install -r requirements.txt`, start
   `uvicorn server.main:app --host 0.0.0.0 --port $PORT`. Env vars
-  `VIKEY_API_KEY`, `VIKEY_BASE_URL`,
+  `VIKEY_API_KEY`, `VIKEY_BASE_URL`, `OPENROUTER_API_KEY`,
   `ALLOWED_ORIGINS` are set in the Render dashboard (never committed).
 - Render free tier sleeps after ~15 minutes idle (~50s cold start) and
   shares 750 instance-hours/month across services.
