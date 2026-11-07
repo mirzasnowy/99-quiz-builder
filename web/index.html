@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Employee Quiz Builder — 99 Group</title>
+<meta name="description" content="Generate a grounded multiple-choice quiz on any property topic, then play it. Built for 99 Group employees.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+<script src="config.js"></script>
+<script src="confetti.js"></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<main class="app">
+
+  <header class="topbar">
+    <div>
+      <h1>Employee Quiz Builder</h1>
+      <p class="subtitle">99 Group &middot; test your property knowledge</p>
+    </div>
+    <span id="backend-chip" class="chip chip-waking" role="status">Waking generator&hellip;</span>
+  </header>
+
+  <!-- ============ HOME ============ -->
+  <section id="screen-home" class="screen" aria-label="Home">
+    <form id="generate-form">
+      <label for="topic-input">Topic</label>
+      <input id="topic-input" type="text" minlength="3" maxlength="120"
+        placeholder="e.g. Property Market updates in Jakarta" autocomplete="off">
+      <label for="language-select">Quiz language</label>
+      <select id="language-select">
+        <option value="en" selected>English</option>
+        <option value="id">Bahasa Indonesia</option>
+      </select>
+      <button id="generate-btn" type="submit" class="btn btn-primary">Generate quiz</button>
+      <p class="hint">A new quiz takes 20&ndash;60 seconds: we search sources, draft questions, then validate every answer.</p>
+    </form>
+
+    <div id="generate-notice" class="notice" hidden></div>
+
+    <h2>Or play a sample quiz</h2>
+    <p class="hint">These work with no backend at all.</p>
+    <div id="sample-cards" class="sample-cards"></div>
+    <noscript><p class="notice">This page needs JavaScript to play the quizzes.</p></noscript>
+  </section>
+
+  <!-- ============ LOADING ============ -->
+  <section id="screen-loading" class="screen" aria-label="Generating quiz" hidden>
+    <div class="loader" aria-hidden="true"><span></span><span></span><span></span></div>
+    <p class="loading-note">Searching sources, drafting, validating: 20&ndash;60 s</p>
+    <p class="hint" id="loading-topic"></p>
+    <button id="cancel-generate-btn" type="button" class="btn btn-secondary">Cancel</button>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="screen-quiz" class="screen" aria-label="Quiz" hidden>
+    <div class="quiz-header">
+      <span id="streak-badge" class="streak" title="Consecutive correct answers">&#128293; <span id="streak-count">0</span></span>
+      <span id="grounding-badge" class="badge badge-grounded" hidden></span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+      <p id="progress-text" class="progress-text">Question 1 / 10</p>
+    </div>
+    <div class="timer-wrap" aria-label="Time left for this question">
+      <div class="timer-bar"><div id="timer-fill" class="timer-fill"></div></div>
+      <p id="timer-text" class="timer-text">25 s</p>
+    </div>
+
+    <div id="question-card" class="question-card">
+      <p id="question-difficulty" class="difficulty"></p>
+      <h2 id="question-text"></h2>
+      <div id="options" class="options" role="group" aria-label="Answer options"></div>
+      <div id="feedback" class="feedback" aria-live="polite"></div>
+      <div id="explanation-box" class="explanation" hidden>
+        <p id="explanation-text"></p>
+        <p id="source-line" class="source-line"></p>
+      </div>
+      <button id="next-btn" type="button" class="btn btn-primary" hidden>Next</button>
+    </div>
+  </section>
+
+  <!-- ============ RESULTS ============ -->
+  <section id="screen-results" class="screen" aria-label="Results" hidden>
+    <h2>Your result</h2>
+    <p class="score-line"><span id="score-count">0</span> <span class="score-label">points</span></p>
+    <p id="grade-line" class="grade-line"></p>
+    <p id="correct-line" class="correct-line"></p>
+    <p id="best-line" class="best-line"></p>
+    <div class="results-actions">
+      <button id="review-btn" type="button" class="btn btn-primary">Review answers</button>
+      <button id="replay-btn" type="button" class="btn btn-secondary">Play again</button>
+      <button id="home-btn" type="button" class="btn btn-secondary">New topic</button>
+    </div>
+  </section>
+
+  <!-- ============ REVIEW ============ -->
+  <section id="screen-review" class="screen" aria-label="Review answers" hidden>
+    <h2>Review your answers</h2>
+    <p id="review-summary" class="hint"></p>
+    <div id="review-list" class="review-list"></div>
+    <button id="review-back-btn" type="button" class="btn btn-primary">Back to results</button>
+  </section>
+
+  <footer class="footer">
+    <p>Questions are grounded in web sources where possible. Ungrounded questions are flagged, never hidden.</p>
+  </footer>
+</main>
+</body>
+</html>
