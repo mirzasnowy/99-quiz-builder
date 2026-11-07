@@ -4,8 +4,8 @@ Usage:
   python -m scripts.generate_sample --topic "Property Market updates in Jakarta" \
       --out web/samples/jakarta-property-market.json [--language en]
 
-Keys come from the environment (never from a file): OPENROUTER_API_KEY,
-VIKEY_API_KEY, VIKEY_BASE_URL. Retries the whole pipeline up to 2 times
+Keys come from the environment (never from a file): VIKEY_API_KEY,
+VIKEY_BASE_URL. Retries the whole pipeline up to 2 times
 until 10 valid questions exist (design section 5).
 """
 import argparse
