@@ -15,58 +15,66 @@
 <main class="app">
 
   <header class="topbar">
-    <div>
-      <h1>Employee Quiz Builder</h1>
-      <p class="subtitle">99 Group &middot; test your property knowledge</p>
+    <div class="brand">
+      <span class="wordmark" aria-hidden="true">99</span>
+      <span class="brand-name">99 Group</span>
     </div>
-    <span id="backend-chip" class="chip chip-waking" role="status">Waking generator&hellip;</span>
+    <div class="topbar-right">
+      <span class="tagline">Learn &middot; Grow &middot; Excel</span>
+      <span id="backend-chip" class="chip chip-waking" role="status">Waking generator&hellip;</span>
+    </div>
   </header>
 
   <!-- ============ HOME ============ -->
   <section id="screen-home" class="screen" aria-label="Home">
+    <div class="home-hero">
+      <h1>Employee<br>Quiz Builder</h1>
+      <p class="subtitle">Test your knowledge. Earn your badge!</p>
+    </div>
     <form id="generate-form">
-      <label for="topic-input">Topic</label>
+      <label class="visually-hidden" for="topic-input">Topic</label>
       <input id="topic-input" type="text" minlength="3" maxlength="120"
-        placeholder="e.g. Property Market updates in Jakarta" autocomplete="off">
-      <label for="language-select">Quiz language</label>
-      <select id="language-select">
-        <option value="en" selected>English</option>
-        <option value="id">Bahasa Indonesia</option>
-      </select>
-      <button id="generate-btn" type="submit" class="btn btn-primary">Generate quiz</button>
-      <p class="hint">A new quiz takes 20&ndash;60 seconds: we search sources, draft questions, then validate every answer.</p>
+        placeholder="Type any topic..." autocomplete="off">
+      <p class="field-label" id="language-label">Quiz language</p>
+      <div class="segmented" role="group" aria-labelledby="language-label">
+        <button type="button" class="segmented-btn is-active" data-lang="en" aria-pressed="true">English</button>
+        <button type="button" class="segmented-btn" data-lang="id" aria-pressed="false">Bahasa Indonesia</button>
+      </div>
+      <button id="generate-btn" type="submit" class="btn btn-primary">Generate Quiz</button>
     </form>
 
     <div id="generate-notice" class="notice" hidden></div>
 
-    <h2>Or play a sample quiz</h2>
-    <p class="hint">These work with no backend at all.</p>
+    <p class="try-label">Try these topics</p>
     <div id="sample-cards" class="sample-cards"></div>
     <noscript><p class="notice">This page needs JavaScript to play the quizzes.</p></noscript>
   </section>
 
-  <!-- ============ LOADING ============ -->
+  <!-- ============ GENERATING (progress) ============ -->
   <section id="screen-loading" class="screen" aria-label="Generating quiz" hidden>
-    <div class="loader" aria-hidden="true"><span></span><span></span><span></span></div>
-    <p class="loading-note">Searching sources, drafting, validating: 20&ndash;60 s</p>
-    <p class="hint" id="loading-topic"></p>
+    <div class="progress-hero">
+      <p class="kicker"><span class="kicker-num">01</span> Generating your quiz</p>
+      <h2 id="loading-topic-title" class="loading-topic"></h2>
+    </div>
+    <div class="card progress-card">
+      <p id="loading-stage-label" class="stage-label">Searching the web&hellip;</p>
+      <div class="progress-bar progress-bar-thick"><div id="loading-progress-fill" class="progress-fill"></div></div>
+      <p id="loading-time" class="time-line">Elapsed 0 s &middot; usually 20&ndash;60 s</p>
+      <p id="loading-estimate-note" class="hint" hidden>Live progress is not available yet &mdash; showing time estimates.</p>
+      <ol id="stage-list" class="stage-list"></ol>
+    </div>
+    <div id="loading-error" class="notice" hidden></div>
     <button id="cancel-generate-btn" type="button" class="btn btn-secondary">Cancel</button>
   </section>
 
   <!-- ============ QUIZ ============ -->
   <section id="screen-quiz" class="screen" aria-label="Quiz" hidden>
-    <div class="quiz-header">
-      <span id="streak-badge" class="streak" title="Consecutive correct answers">&#128293; <span id="streak-count">0</span></span>
-      <span id="grounding-badge" class="badge badge-grounded" hidden></span>
+    <div class="quiz-topbar">
+      <span id="timer-chip" class="timer-chip"><span class="icon" data-icon="clock"></span><span id="timer-text">00:25</span></span>
+      <div class="quiz-progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+      <span id="streak-badge" class="streak" title="Consecutive correct answers"><span class="icon" data-icon="flame"></span><span id="streak-count">0</span></span>
     </div>
-    <div class="progress-wrap">
-      <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
-      <p id="progress-text" class="progress-text">Question 1 / 10</p>
-    </div>
-    <div class="timer-wrap" aria-label="Time left for this question">
-      <div class="timer-bar"><div id="timer-fill" class="timer-fill"></div></div>
-      <p id="timer-text" class="timer-text">25 s</p>
-    </div>
+    <p id="progress-text" class="progress-text">Question 1 of 10</p>
 
     <div id="question-card" class="question-card">
       <p id="question-difficulty" class="difficulty"></p>
@@ -79,25 +87,27 @@
       </div>
       <button id="next-btn" type="button" class="btn btn-primary" hidden>Next</button>
     </div>
+    <p class="quiz-meta"><span id="grounding-badge" class="badge badge-grounded" hidden></span></p>
   </section>
 
   <!-- ============ RESULTS ============ -->
   <section id="screen-results" class="screen" aria-label="Results" hidden>
-    <h2>Your result</h2>
-    <p class="score-line"><span id="score-count">0</span> <span class="score-label">points</span></p>
-    <p id="grade-line" class="grade-line"></p>
+    <p class="score-big"><span id="score-count">0</span><span id="score-total" class="score-total"> / 10</span></p>
+    <p><span id="grade-pill" class="grade-pill grade-gold"></span></p>
+    <p id="grade-message" class="grade-message"></p>
     <p id="correct-line" class="correct-line"></p>
     <p id="best-line" class="best-line"></p>
     <div class="results-actions">
-      <button id="review-btn" type="button" class="btn btn-primary">Review answers</button>
-      <button id="replay-btn" type="button" class="btn btn-secondary">Play again</button>
+      <button id="replay-btn" type="button" class="btn btn-primary">Play Again</button>
+      <button id="review-btn" type="button" class="btn btn-secondary">Review answers</button>
       <button id="home-btn" type="button" class="btn btn-secondary">New topic</button>
     </div>
   </section>
 
   <!-- ============ REVIEW ============ -->
   <section id="screen-review" class="screen" aria-label="Review answers" hidden>
-    <h2>Review your answers</h2>
+    <p class="kicker"><span class="kicker-num">02</span> Review your answers</p>
+    <h2 class="section-title">Review your answers</h2>
     <p id="review-summary" class="hint"></p>
     <div id="review-list" class="review-list"></div>
     <button id="review-back-btn" type="button" class="btn btn-primary">Back to results</button>
@@ -105,6 +115,7 @@
 
   <footer class="footer">
     <p>Questions are grounded in web sources where possible. Ungrounded questions are flagged, never hidden.</p>
+    <p>Employee Quiz Builder &middot; 99 Group &middot; Section 2, Option C</p>
   </footer>
 </main>
 </body>
