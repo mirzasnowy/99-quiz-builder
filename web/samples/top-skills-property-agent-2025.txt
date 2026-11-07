@@ -1,0 +1,95 @@
+NOTE: Test fixture only - to be replaced by a real generated quiz. See the JSON file.
+Topic: Top skills of a property agent in 2025
+Quiz ID: top-skills-property-agent-2025-20261107-b7c2
+Grounding: grounded
+Questions: 10
+
+1. For a property agent in 2025, what is the most important first skill when meeting a new buyer?
+   A. Talking as much as possible during every viewing
+   B. Showing every listing in the office on the first day
+   C. Listening first to understand the buyer's needs and budget
+   D. Pushing the most expensive listing in every case
+   Correct answer: C
+   Explanation: A sale starts with understanding what the buyer truly needs and can afford. Listening first prevents showing homes that never fit and builds trust quickly.
+   Source: How to Be a Successful Property Agent | 99.co - https://www.99.co/id/panduan/cara-menjadi-agen-properti/
+
+2. Why does digital listing quality matter so much for a property agent in 2025?
+   A. Using blurry photos so the home looks bigger in person
+   B. Taking bright, clear photos and a short video tour of each listing
+   C. Posting the same photo for every listing to save time
+   D. Hiding the front of the house to create mystery
+   Correct answer: B
+   Explanation: Buyers filter listings by photos before they read anything else, so clear photos and a short video tour decide whether a home gets a viewing at all.
+   Source: Tips for Property Agents in the Digital Era | Rumah123 - https://www.rumah123.com/panduan-properti/agen-properti/
+
+3. What does good negotiation look like for a property agent?
+   A. Always insisting on the first asking price
+   B. Finding a middle ground both buyer and seller accept
+   C. Refusing to share any price information with buyers
+   D. Letting the buyer and seller argue without guidance
+   Correct answer: B
+   Explanation: A good negotiator gets the seller a fair price while keeping the buyer comfortable enough to close. Pushing only one side usually kills the deal.
+   Source: How to Be a Successful Property Agent | 99.co - https://www.99.co/id/panduan/cara-menjadi-agen-properti/
+
+4. What legal habit protects a property agent and their clients?
+   A. Verifying the land certificate and building permits before marketing a home
+   B. Assuming the seller's documents are always correct
+   C. Selling first and checking documents after payment
+   D. Asking the buyer to handle all legal checks alone
+   Correct answer: A
+   Explanation: An agent who checks SHM, HGB and building permits first avoids selling a disputed property and protects both the client and their own reputation.
+   Source: Tips for Property Agents in the Digital Era | Rumah123 - https://www.rumah123.com/panduan-properti/agen-properti/
+
+5. Which tool helps a busy agent follow up with every lead on time?
+   A. Memorising every lead's phone number by heart
+   B. Only calling buyers who call the agent first
+   C. Keeping client notes on loose pieces of paper
+   D. Using a CRM to track leads and follow up on time
+   Correct answer: D
+   Explanation: A CRM keeps every lead, viewing and follow-up in one place, so no buyer is forgotten. Memory and scattered chat messages lose deals.
+   Source: Top Skills Every Real Estate Agent Needs in 2025 | PropertyGuru - https://www.propertyguru.com.sg/property-guides/real-estate-agent-skills-2025
+
+6. What should an agent base a recommended listing price on?
+   A. The seller's dream price from five years ago
+   B. Recent sale prices of similar nearby properties
+   C. The price of the most expensive home in the city
+   D. A random price that sounds impressive
+   Correct answer: B
+   Explanation: A CMA gives a seller a price grounded in recent comparable sales, not a guess. That honest pricing sells faster than an inflated listing price.
+   Source: Top Skills Every Real Estate Agent Needs in 2025 | PropertyGuru - https://www.propertyguru.com.sg/property-guides/real-estate-agent-skills-2025
+
+7. Which social media habit helps a property agent reach more buyers in 2025?
+   A. Only advertising in printed newspapers
+   B. Posting short video tours on social media
+   C. Refusing to use any social media at all
+   D. Only showing homes to walk-in visitors
+   Correct answer: B
+   Explanation: Short video tours meet buyers where they already scroll every day. A phone video of a real walkthrough reaches far more people than a printed flyer.
+   Source: Tips for Property Agents in the Digital Era | Rumah123 - https://www.rumah123.com/panduan-properti/agen-properti/
+
+8. What does lead qualification mean in practice for a property agent?
+   A. Showing homes to everyone who asks, with no questions
+   B. Spending the same time on every enquiry regardless of readiness
+   C. Waiting for buyers to decide everything on their own
+   D. Asking about budget and timeline before arranging viewings
+   Correct answer: D
+   Explanation: Qualifying a lead means checking budget, timeline and decision-maker before spending hours on viewings. Unqualified leads waste the agent's best selling time.
+   Source: Top Skills Every Real Estate Agent Needs in 2025 | PropertyGuru - https://www.propertyguru.com.sg/property-guides/real-estate-agent-skills-2025
+
+9. How does financial literacy help a property agent serve buyers better?
+   A. Comparing KPR options and monthly instalments with the buyer
+   B. Telling the buyer to borrow as much as the bank allows
+   C. Hiding the total interest cost of the loan
+   D. Refusing to discuss money until after signing
+   Correct answer: A
+   Explanation: Buyers decide with monthly instalments, not just the headline price. An agent who can compare KPR options helps buyers choose a home they can actually afford.
+   Source: How to Be a Successful Property Agent | 99.co - https://www.99.co/id/panduan/cara-menjadi-agen-properti/
+
+10. Which behaviour builds long-term trust for a property agent?
+   A. Hiding defects so the deal closes faster
+   B. Disclosing known defects and real costs honestly
+   C. Promising a guaranteed profit to every buyer
+   D. Charging hidden fees the buyer only sees at signing
+   Correct answer: B
+   Explanation: Disclosing a defect may lose one sale, but hiding it loses the client and the agent's reputation. Honest agents get referrals, which are the cheapest leads of all.
+   Source: Top Skills Every Real Estate Agent Needs in 2025 | PropertyGuru - https://www.propertyguru.com.sg/property-guides/real-estate-agent-skills-2025
