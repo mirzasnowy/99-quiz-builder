@@ -30,7 +30,7 @@ from quizgen.models import GenerateRequest
 
 log = logging.getLogger("quizgen.server")
 
-VERSION = "1.2.0"
+VERSION = "1.3.0"
 PER_IP_PER_HOUR = 5
 GLOBAL_PER_DAY = 40
 JOB_TTL_S = 600  # jobs expire after 10 minutes
