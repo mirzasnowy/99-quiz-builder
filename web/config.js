@@ -1,6 +1,6 @@
 // Quiz Builder frontend config.
-// Set window.API_BASE to the live Render backend URL, e.g.
-//   "https://quiz-builder-xxxx.onrender.com"
-// Leave it as "" (empty string) for "no backend": the app then uses
-// only the bundled sample quizzes in samples/ and shows the offline chip.
-window.API_BASE = "";
+// Live Render backend URL (service srv-dbnc3qlg1s2s73c9mmp0). The backend
+// only answers /api/generate once OPENROUTER_API_KEY and VIKEY_API_KEY are
+// set in the Render dashboard; until then it serves /health with
+// providers false and the app falls back to the bundled samples.
+window.API_BASE = "https://quiz-builder-o0r5.onrender.com";
