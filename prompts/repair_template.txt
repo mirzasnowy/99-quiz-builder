@@ -4,7 +4,7 @@ Mode: {mode}
 
 {sources_block}
 
-The questions below failed automated validation. Fix each one so that it passes, keeping the same topic and, where possible, the same underlying fact. If a question cannot be fixed, replace it with a new question on the same topic. Obey every rule in the system prompt. Return one JSON object {"questions":[...]} containing ONLY the corrected questions, in the same order, using the same schema.
+The questions below failed automated validation. Fix each one so that it passes, keeping the same topic and, where possible, the same underlying fact. If a question cannot be fixed, replace it with a new question on the same topic. Obey every rule in the system prompt. Return one JSON object {{"questions":[...]}} containing ONLY the corrected questions, in the same order, using the same schema.
 
 FAILED QUESTIONS (index, question, and the exact failures):
 {failures_json}
