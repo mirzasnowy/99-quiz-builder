@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: 99-quiz-builder
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn server.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    plan: free
+    region: singapore
+    envVars:
+      - key: VIKEY_BASE_URL
+        value: https://api.vikey.ai/v1
