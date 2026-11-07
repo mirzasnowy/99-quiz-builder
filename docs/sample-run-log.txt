@@ -1,0 +1,56 @@
+RUN: /home/hatch/workspace/aic-section1/lky-chatbot/.venv/bin/python -m scripts.generate_sample --topic Property Market updates in Jakarta --out web/samples/jakarta-property-market.json --sources-file /tmp/quiz-sources-jakarta.json
+INFO HTTP Request: GET https://www.dh-realting.com/en/insights/what-can-you-buy-in-indonesia-for-70-000-350-000-2026 "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://www.remoters.io/en/purchase/jakarta "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://realestateasia.com/residential/news/cbd-leads-jakarta-apartment-price-gains-growth-remains-uneven "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://www.fazwaz.id/property-for-sale/indonesia/jakarta/near-mrt-station "HTTP/1.1 200 OK"
+INFO HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+WARNING attempt 1 failed: all providers failed: [{'provider': 'openrouter', 'model': 'google/gemma-4-26b-a4b-it:free', 'tier': 'free', 'ok': False, 'error': 'rate_limited', 'ms': 631}, {'provider': 'vikey', 'model': 'openai/gpt-6-luna', 'tier': 'paid', 'ok': False, 'error': 'timeout', 'ms': 90647}, {'provider': 'vikey', 'model': 'deepseek/deepseek-v4-flash', 'tier': 'paid', 'ok': False, 'error': 'timeout', 'ms': 90962}]
+WARNING retry 1: cooldowns cleared, waiting 30s
+INFO HTTP Request: GET https://www.dh-realting.com/en/insights/what-can-you-buy-in-indonesia-for-70-000-350-000-2026 "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://www.remoters.io/en/purchase/jakarta "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://realestateasia.com/residential/news/cbd-leads-jakarta-apartment-price-gains-growth-remains-uneven "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://www.fazwaz.id/property-for-sale/indonesia/jakarta/near-mrt-station "HTTP/1.1 200 OK"
+INFO HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO HTTP Request: POST https://api.vikey.ai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO wrote web/samples/jakarta-property-market.json (10 questions, grounding=grounded, model=deepseek/deepseek-v4-flash, validation={'generated': 12, 'repaired': 0, 'dropped': 0, 'downgraded': 0, 'warnings': []})
+INFO wrote web/samples/jakarta-property-market.txt
+RUN: /home/hatch/workspace/aic-section1/lky-chatbot/.venv/bin/python -m scripts.generate_sample --topic Top skills of a property agent in 2025 --out web/samples/top-skills-property-agent-2025.json --sources-file /tmp/quiz-sources-skills.json
+INFO HTTP Request: GET https://in.indeed.com/career-advice/career-development/skills-for-a-real-estate-agent "HTTP/1.1 403 Forbidden"
+WARNING direct fetch https://in.indeed.com/career-advice/career-development/skills-for-a-real-estate-agent failed: peer closed connection without sending complete message body (incomplete chunked read)
+WARNING direct fetch https://au.indeed.com/career-advice/resumes-cover-letters/realtor-skills failed: The read operation timed out
+INFO HTTP Request: GET https://www.engelvoelkers.com/pt/en/resources/real-estate-agent-profile-key-skills-to-stand-out "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://iqiglobal.com/blog/ren-skills-in-malaysia/ "HTTP/1.1 200 OK"
+INFO HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO HTTP Request: POST https://api.vikey.ai/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING attempt 1 failed: '"questions"'
+WARNING retry 1: cooldowns cleared, waiting 30s
+INFO HTTP Request: GET https://in.indeed.com/career-advice/career-development/skills-for-a-real-estate-agent "HTTP/1.1 403 Forbidden"
+WARNING direct fetch https://in.indeed.com/career-advice/career-development/skills-for-a-real-estate-agent failed: peer closed connection without sending complete message body (incomplete chunked read)
+INFO HTTP Request: GET https://au.indeed.com/career-advice/resumes-cover-letters/realtor-skills "HTTP/1.1 403 Forbidden"
+WARNING direct fetch https://au.indeed.com/career-advice/resumes-cover-letters/realtor-skills failed: peer closed connection without sending complete message body (incomplete chunked read)
+INFO HTTP Request: GET https://www.engelvoelkers.com/pt/en/resources/real-estate-agent-profile-key-skills-to-stand-out "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://iqiglobal.com/blog/ren-skills-in-malaysia/ "HTTP/1.1 200 OK"
+INFO HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO HTTP Request: POST https://api.vikey.ai/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING attempt 2 failed: '"questions"'
+WARNING retry 2: cooldowns cleared, waiting 30s
+INFO HTTP Request: GET https://in.indeed.com/career-advice/career-development/skills-for-a-real-estate-agent "HTTP/1.1 403 Forbidden"
+WARNING direct fetch https://in.indeed.com/career-advice/career-development/skills-for-a-real-estate-agent failed: peer closed connection without sending complete message body (incomplete chunked read)
+INFO HTTP Request: GET https://au.indeed.com/career-advice/resumes-cover-letters/realtor-skills "HTTP/1.1 403 Forbidden"
+WARNING direct fetch https://au.indeed.com/career-advice/resumes-cover-letters/realtor-skills -> HTTP 403
+INFO HTTP Request: GET https://www.engelvoelkers.com/pt/en/resources/real-estate-agent-profile-key-skills-to-stand-out "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://iqiglobal.com/blog/ren-skills-in-malaysia/ "HTTP/1.1 200 OK"
+INFO HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO HTTP Request: POST https://api.vikey.ai/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING attempt 3 failed: '"questions"'
+generation failed after 3 attempts: '"questions"'
+RUN: /home/hatch/workspace/aic-section1/lky-chatbot/.venv/bin/python -m scripts.generate_sample --topic Top skills of a property agent in 2025 --out web/samples/top-skills-property-agent-2025.json --sources-file /tmp/quiz-sources-skills.json
+INFO HTTP Request: GET https://in.indeed.com/career-advice/career-development/skills-for-a-real-estate-agent "HTTP/1.1 403 Forbidden"
+WARNING direct fetch https://in.indeed.com/career-advice/career-development/skills-for-a-real-estate-agent failed: peer closed connection without sending complete message body (incomplete chunked read)
+WARNING direct fetch https://au.indeed.com/career-advice/resumes-cover-letters/realtor-skills failed: Server disconnected without sending a response.
+INFO HTTP Request: GET https://www.engelvoelkers.com/pt/en/resources/real-estate-agent-profile-key-skills-to-stand-out "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://iqiglobal.com/blog/ren-skills-in-malaysia/ "HTTP/1.1 200 OK"
+INFO HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+INFO HTTP Request: POST https://api.vikey.ai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO wrote web/samples/top-skills-property-agent-2025.json (10 questions, grounding=grounded, model=openai/gpt-6-luna, validation={'generated': 12, 'repaired': 0, 'dropped': 0, 'downgraded': 0, 'warnings': []})
+INFO wrote web/samples/top-skills-property-agent-2025.txt
