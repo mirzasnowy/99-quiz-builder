@@ -116,7 +116,19 @@ def _shuffle_options(questions, seed):
     return out
 
 
-def generate_quiz(topic, num_questions=10, language="en", sources_override=None):
+def _emit(on_progress, stage, progress):
+    """Report a real pipeline stage to the caller's progress callback.
+    Never let a progress callback break generation."""
+    if on_progress is None:
+        return
+    try:
+        on_progress(stage, progress)
+    except Exception as exc:  # noqa: BLE001 - progress is best-effort
+        log.warning("on_progress %s/%s failed: %s", stage, progress, exc)
+
+
+def generate_quiz(topic, num_questions=10, language="en", sources_override=None,
+                  on_progress=None):
     """Run the full pipeline. Returns the quiz dict (schema section 3).
     Raises GenerationFailed (too few valid questions) or
     ProvidersUnavailable (all LLM tiers failed).
@@ -127,20 +139,27 @@ def generate_quiz(topic, num_questions=10, language="en", sources_override=None)
     search engine is blocked from this build host. The quiz JSON records
     provider "direct-fetch" and the note "duckduckgo_blocked_from_build_host"
     so the provenance stays honest.
+
+    on_progress: optional callable(stage, progress) called at real stage
+    boundaries only — searching 5/15, drafting 20/65, validating 75,
+    repairing 85 (only when a repair round actually runs), done 100.
+    Never a fake timer.
     """
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     quiz_id = _quiz_id(topic)
 
     # 1. Search (degrades to ungrounded mode on any failure), unless the
     # caller supplied source URLs directly (sample generation only).
+    _emit(on_progress, "searching", 5)
     if sources_override:
         result = search_mod.fetch_sources(sources_override)
         provider = "direct-fetch"
         search_note = result["note"] or "duckduckgo_blocked_from_build_host"
     else:
         result = search_mod.search(topic)
-        provider = "duckduckgo-html"
+        provider = result["provider"]
         search_note = result["note"]
+    _emit(on_progress, "searching", 15)
     sources = result["sources"]
     grounded_mode = result["note"] is None
     sources_by_id = {s["id"]: s for s in sources}
@@ -160,18 +179,22 @@ def generate_quiz(topic, num_questions=10, language="en", sources_override=None)
         "NO SOURCES AVAILABLE. Follow the UNGROUNDED MODE rules."
     user = prompt_mod.user_prompt(topic, language, mode, N_GENERATE,
                                   sources_block, today)
+    _emit(on_progress, "drafting", 20)
     res = _call_llm(system, user, temperature=0.4)
+    _emit(on_progress, "drafting", 65)
     model_used = res["model"]
     providers_tried = len(res["attempts"])
     questions = _parse_questions(res["text"])
 
     # 3. Validate + repair (max 2 rounds).
+    _emit(on_progress, "validating", 75)
     valid, failures = validate_questions(questions, sources, grounded_mode)
     generated = len(questions)
     repaired = 0
     for _round in range(MAX_REPAIR_ROUNDS):
         if not failures:
             break
+        _emit(on_progress, "repairing", 85)
         failed = [{"index": idx, "question": questions[idx],
                    "failures": failures[idx]} for idx in sorted(failures)]
         repair_user = prompt_mod.repair_prompt(
@@ -224,6 +247,7 @@ def generate_quiz(topic, num_questions=10, language="en", sources_override=None)
     warnings = []
     if len(finalised) < num_questions:
         warnings.append("only %d of %d valid" % (len(finalised), num_questions))
+    _emit(on_progress, "done", 100)
     return {
         "schema_version": 1,
         "id": quiz_id,
