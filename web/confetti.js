@@ -2,7 +2,8 @@
 // Call launchConfetti() once, e.g. on a Results screen of 80% or better.
 (function () {
   'use strict';
-  var COLORS = ['#f59e0b', '#0ea5e9', '#22c55e', '#ec4899', '#8b5cf6', '#f97316'];
+  // Editorial palette only: terracotta, gold, green, amber, ink, warm border.
+  var COLORS = ['#B44A1F', '#A87B00', '#2F7D4F', '#D97706', '#1D2A30', '#E4DCCC'];
   function launchConfetti() {
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var canvas = document.createElement('canvas');
