@@ -1,0 +1,95 @@
+NOTE: Test fixture only - to be replaced by a real generated quiz. See the JSON file.
+Topic: Property Market updates in Jakarta
+Quiz ID: jakarta-property-market-20261107-a3f9
+Grounding: grounded
+Questions: 10
+
+1. In Indonesia, what does the abbreviation KPR stand for?
+   A. Kredit Perumahan Rakyat
+   B. Kredit Pemilikan Rumah
+   C. Kredit Properti Residensial
+   D. Kredit Pembiayaan Rumah
+   Correct answer: B
+   Explanation: KPR stands for Kredit Pemilikan Rumah, the mortgage loan Indonesians use to buy a house or apartment. The other options sound similar but are not the official term.
+   Source: Pasar Properti Jakarta 2025 | 99.co - https://www.99.co/id/panduan/pasar-properti-jakarta/
+
+2. Which Jakarta area is the city's main central business district, home to the Sudirman and Thamrin office towers?
+   A. Kelapa Gading
+   B. Bintaro Jaya
+   C. Sudirman-Thamrin corridor
+   D. Cibubur
+   Correct answer: C
+   Explanation: The Sudirman-Thamrin corridor is Jakarta's central business district, where most Grade A offices, hotels and the MRT line are concentrated. The other areas are mainly residential suburbs.
+   Source: Jakarta Property Market Highlights | Knight Frank Indonesia - https://www.knightfrank.co.id/research/jakarta-property-market
+
+3. What ownership certificate covers a single apartment unit in Indonesia?
+   A. SHM (Sertifikat Hak Milik) for the land
+   B. SHMSRS (Hak Milik atas Satuan Rumah Susun)
+   C. HGB (Hak Guna Bangunan) for the developer only
+   D. Girik, the old village land record
+   Correct answer: B
+   Explanation: An apartment unit is owned under SHMSRS, the strata title for a unit in a multi-storey building. SHM covers land, HGB is a building right, and girik is an outdated record.
+   Source: Panduan Properti Jakarta | Rumah123 - https://www.rumah123.com/panduan-properti/
+
+4. When Bank Indonesia cuts its benchmark interest rate, what usually happens to KPR mortgage rates and buyer demand?
+   A. KPR rates fall and demand for homes usually rises
+   B. KPR rates rise and demand for homes usually falls
+   C. KPR rates stay fixed by law and demand does not change
+   D. KPR rates fall but banks stop lending for property
+   Correct answer: A
+   Explanation: A lower benchmark rate makes bank funding cheaper, so KPR rates usually fall and monthly instalments drop, which brings more buyers into the market.
+   Source: Residential Property Price Survey | Bank Indonesia - https://www.bi.go.id/en/publikasi/laporan/Pages/Survei-Harga-Properti-Residensial.aspx
+
+5. BPHTB is a tax paid in Indonesia when a buyer does what?
+   A. Rents out a property for the first time
+   B. Renovates a house above a certain size
+   C. Acquires land or building rights, such as buying a house
+   D. Lists a property for sale online
+   Correct answer: C
+   Explanation: BPHTB (Bea Perolehan Hak atas Tanah dan Bangunan) is the duty paid when someone acquires rights over land or a building, including a normal house purchase.
+   Source: Panduan Properti Jakarta | Rumah123 - https://www.rumah123.com/panduan-properti/
+
+6. What does transit-oriented development (TOD) mean for a Jakarta property near an MRT or LRT station?
+   A. The building is only for transit workers
+   B. Homes, offices and shops are built close to the station so residents can walk to transit
+   C. The property cannot be sold for ten years
+   D. The building must include a bus terminal inside it
+   Correct answer: B
+   Explanation: TOD clusters housing, offices and shops within walking distance of a transit station, so residents rely less on cars. That walkability is why TOD apartments in Jakarta command a premium.
+   Source: Jakarta Property Market Highlights | Knight Frank Indonesia - https://www.knightfrank.co.id/research/jakarta-property-market
+
+7. Why should a buyer always check a Jakarta property's flood history before buying?
+   A. Flood history determines the property tax rate
+   B. Flood-prone locations suffer damage, higher insurance costs and lower resale value
+   C. Flooded areas are illegal to sell in Jakarta
+   D. Flood history is only relevant for apartments above the 10th floor
+   Correct answer: B
+   Explanation: Jakarta has well-known flood-prone pockets. A flood history means repair costs, harder insurance and buyers who discount the price, so it directly affects value.
+   Source: Pasar Properti Jakarta 2025 | 99.co - https://www.99.co/id/panduan/pasar-properti-jakarta/
+
+8. What is the main trade-off when choosing a landed house over an apartment in Jakarta?
+   A. A landed house has land ownership and more space, but usually sits further from the city centre
+   B. A landed house is always cheaper than any apartment
+   C. A landed house needs no certificate at all
+   D. A landed house can never be rented out
+   Correct answer: A
+   Explanation: A landed house gives you the land itself and more living space, but affordable landed houses tend to be in outer Jakarta, so the commute is longer than from a central apartment.
+   Source: Jakarta Property Market | JLL Indonesia - https://www.jll.co.id/en/trends-and-insights/research/jakarta-property-market
+
+9. When an agent prepares a comparative market analysis (CMA) for a Jakarta seller, what does the agent mainly use?
+   A. The seller's original purchase price from ten years ago
+   B. Recent sale prices of similar nearby properties
+   C. The asking prices of luxury homes in another city
+   D. The construction cost of the building alone
+   Correct answer: B
+   Explanation: A CMA estimates a fair listing price from recent sales of comparable homes nearby, adjusted for size, condition and location. The old purchase price or another city's prices do not set today's market value.
+   Source: Panduan Properti Jakarta | Rumah123 - https://www.rumah123.com/panduan-properti/
+
+10. Since April 2022, what is the standard VAT (PPN) rate applied to new property sales in Indonesia?
+   A. 5%
+   B. 10%
+   C. 11%
+   D. 15%
+   Correct answer: C
+   Explanation: Indonesia raised VAT from 10% to 11% in April 2022, and that 11% rate applies to taxable property sales. Buyers should budget for it on top of the headline price.
+   Source: Residential Property Price Survey | Bank Indonesia - https://www.bi.go.id/en/publikasi/laporan/Pages/Survei-Harga-Properti-Residensial.aspx
