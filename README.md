@@ -28,11 +28,23 @@ is saved in your browser.
 
 ## How generation works
 
-1. **Search.** The server searches DuckDuckGo for the topic, takes up to 5
-   results, and fetches the top 3 pages (6-second timeout each). Pages with
-   at least 200 characters of text count as usable sources. Fewer than 2
-   usable sources means the quiz is generated in *ungrounded* mode and is
-   flagged as such — never silently presented as grounded.
+1. **Search.** The server runs a provider chain and takes the first one
+   that yields at least 2 usable sources (200+ characters of text each):
+   Brave Search API first, but only when `BRAVE_API_KEY` is set (free tier:
+   2,000 queries/month — see "Key decisions"); then DuckDuckGo Lite; then
+   the Wikipedia API (search + lead-section extracts). For DuckDuckGo Lite
+   the real article URL is decoded out of the `uddg` redirect parameter;
+   for Wikipedia the source is the article URL. Pages with at least 200
+   characters of text count as usable sources. Fewer than 2 usable sources
+   from every provider means the quiz is generated in *ungrounded* mode and
+   is flagged as such — never silently presented as grounded. The quiz JSON
+   records the provider and the failure notes honestly (`search.provider`,
+   `search.note`). Grounding quality depends on the topic: general topics
+   ("How mortgages work") ground well on Wikipedia; current-news topics
+   ("Property Market updates in Singapore") ground on Wikipedia's
+   background articles (Economy of Singapore, Public housing), not on
+   today's news — DuckDuckGo Lite would give current news, but it is
+   blocked from Render's servers (see "What went wrong").
 2. **Generate.** One language-model call drafts 12 questions for a
    10-question quiz (temperature 0.4, max 8,000 tokens). The prompt forces
    JSON-only output and a strict rule: every grounded question must cite a
@@ -65,11 +77,22 @@ bounds the worst-case bill. See `docs/architecture.md` for the full detail.
 
 ## API
 
-- `GET /health` — `{"status": "ok", "version": "1.0.0", "chain": [...]}`.
+- `GET /health` — `{"status": "ok", "version": "1.1.0", "chain": [...]}`.
 - `POST /api/generate` — body `{"topic": "...", "num_questions": 10,
   "language": "en"}` (num_questions 5-10, language en or id). Returns
   `{"quiz": {...}}`. The full quiz JSON schema is documented in
   `docs/architecture.md`.
+- `POST /api/jobs` — same body and validation as `/api/generate`. Returns
+  `202 {"job_id": "...", "status": "searching", "created_at": "..."}` at
+  once; the quiz takes 20-90 s to build.
+- `GET /api/jobs/{job_id}` — `{"job_id", "status", "progress", "stage",
+  "elapsed_s", "quiz"? , "error"?}`. Status is one of `searching`,
+  `drafting`, `validating`, `repairing`, `done`, `error`; `stage` is the
+  human label ("Searching the web for sources", ...); `progress` is 0-100
+  and moves only at real pipeline stage boundaries (never a fake timer).
+  `quiz` appears when status is `done`; `error` when status is `error`.
+  Unknown id returns `404 job_not_found`. Jobs live in memory (last 100,
+  expire after 10 minutes).
 - Errors: `400 invalid_topic`, `429 rate_limited` (5 per IP per hour, 40 per
   day globally, in-memory), `502 generation_failed` (fewer than 5 valid
   questions after repair), `503 providers_unavailable` (all model tiers
@@ -103,29 +126,50 @@ bounds the worst-case bill. See `docs/architecture.md` for the full detail.
 
 Sound effects, achievement badges, 50/50 lifelines, leaderboard, multi-day
 streaks, shareable result image, dark-mode toggle, UI language toggle,
-in-app quiz editor, streaming progress updates, a second search provider,
-an LLM-as-judge, numeric cross-checks of figures in questions, persistent
-rate limits, database/accounts, PDF/Word export, analytics, a separate
-samples endpoint, an admin dashboard, a Cloudflare Worker backend, and an
-Ollama fallback. None of these serve the score or the play experience in
-the time available.
+in-app quiz editor, an LLM-as-judge, numeric cross-checks of figures in
+questions, persistent rate limits, database/accounts, PDF/Word export,
+analytics, a separate samples endpoint, an admin dashboard, a Cloudflare
+Worker backend, and an Ollama fallback. None of these serve the score or
+the play experience in the time available. (A second search provider and
+job progress reporting were originally in this list; both are now built —
+see "How generation works" and the `/api/jobs` endpoints above.)
 
 ## What went wrong / what I would change
 
-- **Every keyless search engine is blocked from this build host.**
-  DuckDuckGo's HTML endpoint answers with a captcha page, Brave Search
-  returns 429 + captcha, Mojeek and Ecosia return 403, and Bing is slow
-  (one query timed out) and returns generic results (Wikipedia, travel
-  guides) instead of current market news. The live server keeps DuckDuckGo
-  search as designed — it may work from Render's IPs — but the two bundled
-  sample quizzes could not be generated through the search step on this
-  machine. They were instead grounded by fetching four reputable article
-  pages directly per topic (the URLs are recorded in each quiz's
-  `search.sources`, with `search.provider` set to `direct-fetch` and a note
-  explaining the block), then run through the same generate / validate /
-  repair pipeline. If I had more time I would add a second search provider
-  (for example a Wikipedia API fallback for general topics) so live
-  generation degrades gracefully instead of going ungrounded.
+- **DuckDuckGo is blocked from everywhere this runs — and the fix took
+  three providers, not one.** DuckDuckGo's HTML endpoint answers with a
+  captcha page from the build host and times out from Render's servers.
+  DuckDuckGo Lite (the lighter endpoint) is flaky too: it returned 10 real
+  news results once for "Property Market updates in Singapore", but usually
+  answers 202 (the verification page) from the build host and times out
+  from Render. SearXNG public instances are no better (searx.be returns
+  HTML instead of JSON, search.bus-hit.me disconnects, searxng.org 404s),
+  and the earlier probes showed Brave web 429 + captcha, Mojeek/Ecosia 403,
+  Bing slow and generic. The fix that shipped is a provider chain in
+  `quizgen/search.py`: Brave Search API first when `BRAVE_API_KEY` is set
+  (free tier, 2,000 queries/month — the one reliable current-news source),
+  then DuckDuckGo Lite, then the Wikipedia API. Wikipedia is what grounds
+  live generation today: it is free, needs no key, and works from Render.
+  Two sharp edges found while wiring it up: (1) httpx's default
+  `Accept-Encoding: gzip, deflate, br` makes Wikimedia's edge return 403 —
+  the search client now sends `Accept-Encoding: gzip` only; (2) a
+  full-article Wikipedia extract comes back 0 chars for some pages
+  ("Mortgage", "Reverse mortgage" both returned empty), while the lead
+  section (`exintro=True`) reliably returns ~2,000 chars — so extracts are
+  lead-only, fetched for up to 5 titles. The two bundled sample quizzes
+  were grounded by fetching four reputable article pages directly per topic
+  (the URLs are recorded in each quiz's `search.sources`, with
+  `search.provider` set to `direct-fetch` and a note explaining the block),
+  then run through the same generate / validate / repair pipeline. The
+  remaining honest limit: live generation grounds general topics well on
+  Wikipedia, but current-news topics ground on Wikipedia's background
+  articles, not on today's news — for current news, set `BRAVE_API_KEY`
+  (sign up at https://brave.com/search/api/, key from
+  https://api-dashboard.search.brave.com/, add it as an env var in the
+  Render dashboard; no code change needed, the server picks it up on the
+  next deploy). One caveat from Brave's own users: new signups in 2026 have
+  reportedly been asked for a card even on the free tier, so treat the free
+  tier as "free, but signup may ask for a card".
 - **Bing's redirect URLs need resolving.** Bing result links are
   `bing.com/ck/a?...` redirects, not the article URL, so a Bing fallback
   would need an extra resolution step before fetching.
@@ -166,20 +210,25 @@ the time available.
 ## Repo layout
 
 - `quizgen/` — the generator package: `llm_client.py` (model fallback
-  chain), `search.py` (DuckDuckGo search + page fetch), `validator.py`
-  (V00-V10 checks), `generator.py` (pipeline), `models.py` (schemas),
-  `prompts.py` (prompt loading).
+  chain), `search.py` (provider chain: Brave API opt-in, DuckDuckGo Lite,
+  Wikipedia + page fetch), `validator.py` (V00-V10 checks), `generator.py`
+  (pipeline, with an `on_progress` callback at real stage boundaries),
+  `models.py` (schemas), `prompts.py` (prompt loading).
 - `prompts/` — the three prompts, verbatim: `system.txt`,
   `user_template.txt`, `repair_template.txt`.
 - `server/main.py` — FastAPI app: `/health`, `POST /api/generate`,
-  rate limits, CORS.
+  `POST /api/jobs` + `GET /api/jobs/{job_id}` (async generation with real
+  stage progress), rate limits, CORS.
 - `web/` — static frontend (index.html, style.css, app.js, confetti.js,
   config.js) and `web/samples/` — the two bundled sample quizzes (JSON +
   plain-text twins).
 - `scripts/generate_sample.py` — CLI that runs the pipeline for a topic and
   writes a sample quiz; `scripts/validate_quiz_file.py` — structural
   validation of a quiz JSON file.
-- `tests/test_validator.py` — 11 tests, one per validation code.
+- `tests/test_validator.py` — 11 tests, one per validation code;
+  `tests/test_search.py` — provider parsing + chain fall-through + Brave
+  opt-in; `tests/test_jobs.py` — job creation, polling to done, 404/400,
+  error mapping (21 tests total, all passing).
 - `docs/architecture.md` — full technical description; `docs/sample-run-log.txt`
   — the real console output of the sample generation runs.
 - `render.yaml` — Render service definition; `requirements.txt` — Python
