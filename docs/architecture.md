@@ -36,7 +36,7 @@ User ──► Cloudflare Pages (static web/) ──► Render (FastAPI server/m
     "note": null
   },
   "model": {"used": "openai/gpt-6-luna",
-            "providers_tried": ["vikey"]},
+            "providers_tried": 1},
   "validation": {"generated": 12, "repaired": 1, "dropped": 2,
                  "downgraded": 0, "warnings": []},
   "questions": [
@@ -63,6 +63,8 @@ User ──► Cloudflare Pages (static web/) ──► Render (FastAPI server/m
   `duckduckgo_blocked_from_build_host` — see "Search" below.
 - `validation.warnings` lists non-fatal notes, for example
   `only_7_questions` when fewer than 10 valid questions survived.
+- `model.providers_tried` is a count of how many chain tiers were attempted
+  (1 means the first tier answered at once; 2 means the fallback answered).
 
 ## Search
 
