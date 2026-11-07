@@ -11,8 +11,8 @@ for the frontend).
 User ──► Cloudflare Pages (static web/) ──► Render (FastAPI server/main.py)
                                             │
                                             ├─► quizgen/search.py ──► DuckDuckGo HTML
-                                            ├─► quizgen/llm_client.py ──► OpenRouter free Gemma
-                                            │                          └─► Vikey Luna / Flash
+                                            ├─► quizgen/llm_client.py ──► Vikey Luna / Flash
+                                            │                          (Vikey-only since v1.2.0)
                                             └─► quizgen/validator.py (V00-V10, pure code)
 ```
 
@@ -36,7 +36,7 @@ User ──► Cloudflare Pages (static web/) ──► Render (FastAPI server/m
     "note": null
   },
   "model": {"used": "openai/gpt-6-luna",
-            "providers_tried": ["openrouter", "vikey"]},
+            "providers_tried": ["vikey"]},
   "validation": {"generated": 12, "repaired": 1, "dropped": 2,
                  "downgraded": 0, "warnings": []},
   "questions": [
@@ -87,18 +87,22 @@ honestly in each quiz's `search` block (`provider: direct-fetch`).
 and adapted). The chain is a reliability fallback: exactly one model writes
 each answer, in this order:
 
-1. OpenRouter `google/gemma-4-26b-a4b-it:free` (free, rate-limited).
-2. Vikey `openai/gpt-6-luna` (paid, ~Rp 720 in / Rp 3,600 out per 1M tokens).
-3. Vikey `deepseek/deepseek-v4-flash` (paid, ~Rp 1,080 in / Rp 1,800 out
+1. Vikey `openai/gpt-6-luna` (paid, ~Rp 720 in / Rp 3,600 out per 1M tokens).
+2. Vikey `deepseek/deepseek-v4-flash` (paid, ~Rp 1,080 in / Rp 1,800 out
    per 1M tokens — the price list in the code; the Vikey dashboard lists
    Rp 1,350 in / Rp 5,400 out for the v4.1 variant, so the estimate is a
    lower bound).
+
+The chain is Vikey-only since v1.2.0 (2026-11-07): the OpenRouter free
+Gemma tier was removed because its upstream shared pool rate-limits
+constantly (HTTP 429), which made whole generations fail whenever Vikey
+also hiccupped.
 
 Per-tier cooldowns: 429 → Retry-After or 300s (capped 900s); 401/403 →
 3600s; 402 → 1800s; 404 → 1800s; 5xx/timeout → 60s. A response cut off by
 the token limit (`finish_reason: length`) counts as a failed tier, not as a
 usable answer. Paid calls are capped at 300 per UTC day
-(`PAID_DAILY_CAP`). Tier timeouts: OpenRouter 60s, Vikey 90s (a 12-question
+(`PAID_DAILY_CAP`). Tier timeout: Vikey 90s (a 12-question
 JSON is a long generation; the first run timed out at the old 40s limit).
 Generation uses temperature 0.4, repair 0.2, max_tokens 8,000 (the design
 said 4,000, but a 12-question JSON does not fit in 4,000 tokens).
@@ -175,7 +179,7 @@ samples only"). With no `API_BASE` configured the chip goes straight to
 - Backend: Render free web service from this repo, build
   `pip install -r requirements.txt`, start
   `uvicorn server.main:app --host 0.0.0.0 --port $PORT`. Env vars
-  `OPENROUTER_API_KEY`, `VIKEY_API_KEY`, `VIKEY_BASE_URL`,
+  `VIKEY_API_KEY`, `VIKEY_BASE_URL`,
   `ALLOWED_ORIGINS` are set in the Render dashboard (never committed).
 - Render free tier sleeps after ~15 minutes idle (~50s cold start) and
   shares 750 instance-hours/month across services.
