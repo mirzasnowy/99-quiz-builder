@@ -8,7 +8,9 @@ Q1. Under the land rules described in the source, which type of title can a fore
    C. Hak Milik (freehold land)
    D. A strata-title apartment unit
    Correct: C
+   Difficulty: easy | Grounded: yes
    Explanation: The source states plainly that freehold land, Hak Milik, is closed to foreigners; they instead buy a long lease, a Hak Pakai title or an apartment unit. Hak Pakai and leases are the routes the source describes as available in practice.
+   Evidence (verbatim from source): "A foreigner cannot hold freehold land (Hak Milik)."
    Source: Buy property in Indonesia for $70k-350k (2026) (https://www.dh-realting.com/en/insights/what-can-you-buy-in-indonesia-for-70-000-350-000-2026)
 
 Q2. A foreign buyer wants a Hak Pakai house in Jakarta. Besides paying the price, what does the source say this requires?
@@ -17,7 +19,9 @@ Q2. A foreign buyer wants a Hak Pakai house in Jakarta. Besides paying the price
    C. Converting the title to Hak Milik within five years of purchase
    D. An Indonesian spouse named as co-owner on the certificate
    Correct: A
+   Difficulty: medium | Grounded: yes
    Explanation: Hak Pakai houses are a registered asset, but the source notes they require a residence permit and a minimum price. A lease, by contrast, is open to anyone but is only a contract.
+   Evidence (verbatim from source): "they require a residence permit and a minimum price"
    Source: Buy property in Indonesia for $70k-350k (2026) (https://www.dh-realting.com/en/insights/what-can-you-buy-in-indonesia-for-70-000-350-000-2026)
 
 Q3. How does the source contrast a lease with a Hak Pakai title for a foreign buyer?
@@ -26,7 +30,9 @@ Q3. How does the source contrast a lease with a Hak Pakai title for a foreign bu
    C. A lease is cheaper and open to anyone, but it is a contract rather than a title
    D. A lease is a registered title that can be mortgaged to a bank
    Correct: C
+   Difficulty: medium | Grounded: yes
    Explanation: The source frames the trade-off clearly: leases are cheaper and unrestricted but give contractual rights, not a registered title. That is why it urges buyers to read what the certificate actually says before comparing prices.
+   Evidence (verbatim from source): "A lease is cheaper and available to anyone, but it is a contract, not a title."
    Source: Buy property in Indonesia for $70k-350k (2026) (https://www.dh-realting.com/en/insights/what-can-you-buy-in-indonesia-for-70-000-350-000-2026)
 
 Q4. For a foreign buyer working with a budget of roughly $70,000–350,000, what does the source say about Jakarta specifically?
@@ -35,7 +41,9 @@ Q4. For a foreign buyer working with a budget of roughly $70,000–350,000, what
    C. The minimum purchase price for foreigners can shut Jakarta out below about $170,000
    D. Jakarta imposes no minimum price on foreigners, unlike Bali
    Correct: C
+   Difficulty: hard | Grounded: yes
    Explanation: The source uses the foreigner minimum price as the reason a mid-sized budget may not stretch to Jakarta at all, with roughly $170,000 as the threshold. The minimum price is a state rule, not a per-unit price cap or a Bali-only restriction.
+   Evidence (verbatim from source): "why a foreigner's minimum purchase price can shut Jakarta out below about $170,000"
    Source: Buy property in Indonesia for $70k-350k (2026) (https://www.dh-realting.com/en/insights/what-can-you-buy-in-indonesia-for-70-000-350-000-2026)
 
 Q5. According to the Bank Indonesia data cited in the source, how much did Greater Jakarta residential prices rise year-on-year in Q1 2025?
@@ -44,7 +52,9 @@ Q5. According to the Bank Indonesia data cited in the source, how much did Great
    C. 1.07%
    D. 1.39%
    Correct: C
+   Difficulty: easy | Grounded: yes
    Explanation: Q1 2025 growth was 1.07%. The 1.39% figure belongs to Q4 2024 and 1.96% to Q3 2023, while 0.47% refers to a real-terms decline.
+   Evidence (verbatim from source): "increased by 1.07% year-on-year in Q1 2025"
    Source: Buying real estate in Jakarta (https://www.remoters.io/en/purchase/jakarta)
 
 Q6. What does the run of Bank Indonesia growth figures from Q3 2023 through Q1 2025 indicate about Greater Jakarta's residential market?
@@ -53,7 +63,9 @@ Q6. What does the run of Bank Indonesia growth figures from Q3 2023 through Q1 2
    C. Price growth has been moderate but steadily decelerating
    D. Prices have been completely flat, recording zero growth
    Correct: C
+   Difficulty: medium | Grounded: yes
    Explanation: Growth slipped from 1.96% to 1.39% to 1.07%, which the source summarises as moderate and decelerating. Prices were still rising in nominal terms, so a sharp fall is the wrong reading.
+   Evidence (verbatim from source): "Jakarta's residential property market has shown moderate and decelerating price growth over the 2023–2025 period."
    Source: Buying real estate in Jakarta (https://www.remoters.io/en/purchase/jakarta)
 
 Q7. On top of the agreed sale price, how much should a Jakarta buyer budget for acquisition costs such as BPHTB, notary and legal fees, and VAT?
@@ -62,7 +74,9 @@ Q7. On top of the agreed sale price, how much should a Jakarta buyer budget for 
    C. 6.5% to 9% of the property value
    D. 1% to 2% of the property value
    Correct: C
+   Difficulty: medium | Grounded: yes
    Explanation: The source benchmarks total buyer-side acquisition costs at 6.5% to 9% of value. The 9.5% to 14% range is the separate round-trip cost of buying and reselling.
+   Evidence (verbatim from source): "typically represent 6.5% to 9% of the property value"
    Source: Buying real estate in Jakarta (https://www.remoters.io/en/purchase/jakarta)
 
 Q8. What is the estimated round-trip cost of buying a Jakarta property and then reselling it?
@@ -71,7 +85,9 @@ Q8. What is the estimated round-trip cost of buying a Jakarta property and then 
    C. Roughly 3% to 5%
    D. Roughly 9.5% to 14%
    Correct: D
+   Difficulty: hard | Grounded: yes
    Explanation: The source puts the full buy-then-sell cost at roughly 9.5% to 14%. The narrower 6.5% to 9% band covers only buyer-side acquisition costs.
+   Evidence (verbatim from source): "round-trip cost of buying and then reselling is estimated at roughly 9.5% to 14%"
    Source: Buying real estate in Jakarta (https://www.remoters.io/en/purchase/jakarta)
 
 Q9. What was Jakarta's citywide average residential price as of mid-2025?
@@ -80,7 +96,9 @@ Q9. What was Jakarta's citywide average residential price as of mid-2025?
    C. Approximately IDR 50 million per square meter
    D. Approximately IDR 25 million per square meter
    Correct: D
+   Difficulty: easy | Grounded: yes
    Explanation: The source cites a citywide average of about IDR 25 million per square meter in mid-2025. It also stresses that this average masks wide variation between locations and buildings.
+   Evidence (verbatim from source): "The citywide average residential price stood at approximately IDR 25 million per square meter as of mid-2025"
    Source: Buying real estate in Jakarta (https://www.remoters.io/en/purchase/jakarta)
 
 Q10. According to Colliers, what is primarily driving Jakarta apartment price growth?
@@ -89,5 +107,7 @@ Q10. According to Colliers, what is primarily driving Jakarta apartment price gr
    C. Speculative buying by investors
    D. Bulk purchases by foreign buyers
    Correct: B
+   Difficulty: easy | Grounded: yes
    Explanation: Colliers attributes growth mainly to end users, noting that investors are directing capital to more liquid asset classes, which limits speculative pressure on residential values.
+   Evidence (verbatim from source): "price growth is being driven primarily by end-user demand"
    Source: CBD leads Jakarta apartment price gains but growth remains uneven (https://realestateasia.com/residential/news/cbd-leads-jakarta-apartment-price-gains-growth-remains-uneven)
