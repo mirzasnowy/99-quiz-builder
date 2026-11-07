@@ -69,10 +69,14 @@ is saved in your browser.
 
 The model chain is a reliability fallback, not a multi-model pipeline:
 exactly one model writes each answer, in this order — `openai/gpt-6-luna`
-on Vikey, then `deepseek/deepseek-v4-flash` on Vikey. The chain is
-Vikey-only (changed 2026-11-07): the OpenRouter free Gemma tier was
-dropped because its upstream shared pool rate-limits constantly (HTTP 429),
-which made whole generations fail whenever Vikey also hiccupped. Each tier
+on Vikey, then `deepseek/deepseek-v4-flash` on Vikey, then
+`deepseek/deepseek-v4-flash` on OpenRouter as a last resort. Vikey is
+first; the OpenRouter backup (paid DeepSeek, NOT the free Gemma tier) only
+runs if both Vikey tiers fail. Gemma was dropped 2026-11-07 because its
+upstream shared pool rate-limits constantly (HTTP 429), and Vikey itself
+then returned empty responses from this Render service twice in one
+afternoon even though the same key worked from the Section 3 service, so
+a Vikey-only chain left the generator dead. Each tier
 has a cooldown after failures (429: Retry-After or 300s, capped at 900s;
 401/403: 1 hour; 402/404: 30 minutes; 5xx/timeout: 60s) and a paid daily
 cap (300 answers) bounds the worst-case bill. See `docs/architecture.md`
@@ -80,7 +84,7 @@ for the full detail.
 
 ## API
 
-- `GET /health` — `{"status": "ok", "version": "1.2.0", "chain": [...]}`.
+- `GET /health` — `{"status": "ok", "version": "1.3.0", "chain": [...]}`.
 - `POST /api/generate` — body `{"topic": "...", "num_questions": 10,
   "language": "en"}` (num_questions 5-10, language en or id). Returns
   `{"quiz": {...}}`. The full quiz JSON schema is documented in
@@ -103,16 +107,19 @@ for the full detail.
 
 ## Key decisions
 
-- **Vikey-only, no free tier.** The chain is GPT-6 Luna first, DeepSeek V4
-  Flash as the fallback, both on Vikey. The OpenRouter free Gemma tier was
-  removed 2026-11-07 because its upstream shared pool rate-limits
-  constantly (HTTP 429 on nearly every attempt), which made whole
-  generations fail whenever Vikey also hiccupped. A paid quiz generation
-  is one LLM call: roughly Rp 9 (DeepSeek V4 Flash) to Rp 15 (GPT-6 Luna)
-  at the listed per-token prices for a typical input (~2,700 tokens of
-  prompt + sources) and output (~3,500 tokens of JSON) — an estimate from
-  the price list, not a measured bill. The paid daily cap (300 calls)
-  bounds the worst case.
+- **Vikey first, paid backup, no free tier.** The chain is GPT-6 Luna
+  first, DeepSeek V4 Flash on Vikey second, and paid DeepSeek V4 Flash on
+  OpenRouter as a last resort that only runs if both Vikey tiers fail. The
+  OpenRouter free Gemma tier was removed 2026-11-07 because its upstream
+  shared pool rate-limits constantly (HTTP 429 on nearly every attempt),
+  and Vikey itself then returned empty responses from this Render service
+  twice in one afternoon even though the same key worked from the Section
+  3 service, so a Vikey-only chain left the generator dead. A paid quiz
+  generation is one LLM call: roughly Rp 9 (DeepSeek V4 Flash) to Rp 15
+  (GPT-6 Luna) at the listed per-token prices for a typical input (~2,700
+  tokens of prompt + sources) and output (~3,500 tokens of JSON) — an
+  estimate from the price list, not a measured bill. The paid daily cap
+  (300 calls) bounds the worst case.
 - **No vector database, no framework.** Retrieval is plain web search plus
   code validation. A vector database would add a hosted dependency and cost
   for a demo whose corpus is the live web, not a fixed document set.
