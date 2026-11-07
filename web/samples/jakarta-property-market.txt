@@ -1,95 +1,93 @@
-NOTE: Test fixture only - to be replaced by a real generated quiz. See the JSON file.
-Topic: Property Market updates in Jakarta
-Quiz ID: jakarta-property-market-20261107-a3f9
-Grounding: grounded
-Questions: 10
+Property Market updates in Jakarta
 
-1. In Indonesia, what does the abbreviation KPR stand for?
-   A. Kredit Perumahan Rakyat
-   B. Kredit Pemilikan Rumah
-   C. Kredit Properti Residensial
-   D. Kredit Pembiayaan Rumah
-   Correct answer: B
-   Explanation: KPR stands for Kredit Pemilikan Rumah, the mortgage loan Indonesians use to buy a house or apartment. The other options sound similar but are not the official term.
-   Source: Pasar Properti Jakarta 2025 | 99.co - https://www.99.co/id/panduan/pasar-properti-jakarta/
+Generated: 2026-11-07T06:16:30Z | Grounding: grounded | Model: deepseek/deepseek-v4-flash
 
-2. Which Jakarta area is the city's main central business district, home to the Sudirman and Thamrin office towers?
-   A. Kelapa Gading
-   B. Bintaro Jaya
-   C. Sudirman-Thamrin corridor
-   D. Cibubur
-   Correct answer: C
-   Explanation: The Sudirman-Thamrin corridor is Jakarta's central business district, where most Grade A offices, hotels and the MRT line are concentrated. The other areas are mainly residential suburbs.
-   Source: Jakarta Property Market Highlights | Knight Frank Indonesia - https://www.knightfrank.co.id/research/jakarta-property-market
+Q1. Under the land rules described in the source, which type of title can a foreigner NOT hold in Indonesia?
+   A. Hak Pakai (right to use)
+   B. A long-term lease
+   C. Hak Milik (freehold land)
+   D. A strata-title apartment unit
+   Correct: C
+   Explanation: The source states plainly that freehold land, Hak Milik, is closed to foreigners; they instead buy a long lease, a Hak Pakai title or an apartment unit. Hak Pakai and leases are the routes the source describes as available in practice.
+   Source: Buy property in Indonesia for $70k-350k (2026) (https://www.dh-realting.com/en/insights/what-can-you-buy-in-indonesia-for-70-000-350-000-2026)
 
-3. What ownership certificate covers a single apartment unit in Indonesia?
-   A. SHM (Sertifikat Hak Milik) for the land
-   B. SHMSRS (Hak Milik atas Satuan Rumah Susun)
-   C. HGB (Hak Guna Bangunan) for the developer only
-   D. Girik, the old village land record
-   Correct answer: B
-   Explanation: An apartment unit is owned under SHMSRS, the strata title for a unit in a multi-storey building. SHM covers land, HGB is a building right, and girik is an outdated record.
-   Source: Panduan Properti Jakarta | Rumah123 - https://www.rumah123.com/panduan-properti/
+Q2. A foreign buyer wants a Hak Pakai house in Jakarta. Besides paying the price, what does the source say this requires?
+   A. A residence permit and meeting the state's minimum price
+   B. Only written approval from the local neighbourhood association
+   C. Converting the title to Hak Milik within five years of purchase
+   D. An Indonesian spouse named as co-owner on the certificate
+   Correct: A
+   Explanation: Hak Pakai houses are a registered asset, but the source notes they require a residence permit and a minimum price. A lease, by contrast, is open to anyone but is only a contract.
+   Source: Buy property in Indonesia for $70k-350k (2026) (https://www.dh-realting.com/en/insights/what-can-you-buy-in-indonesia-for-70-000-350-000-2026)
 
-4. When Bank Indonesia cuts its benchmark interest rate, what usually happens to KPR mortgage rates and buyer demand?
-   A. KPR rates fall and demand for homes usually rises
-   B. KPR rates rise and demand for homes usually falls
-   C. KPR rates stay fixed by law and demand does not change
-   D. KPR rates fall but banks stop lending for property
-   Correct answer: A
-   Explanation: A lower benchmark rate makes bank funding cheaper, so KPR rates usually fall and monthly instalments drop, which brings more buyers into the market.
-   Source: Residential Property Price Survey | Bank Indonesia - https://www.bi.go.id/en/publikasi/laporan/Pages/Survei-Harga-Properti-Residensial.aspx
+Q3. How does the source contrast a lease with a Hak Pakai title for a foreign buyer?
+   A. A lease grants the same rights as freehold for its full term
+   B. A lease requires a residence permit, while Hak Pakai does not
+   C. A lease is cheaper and open to anyone, but it is a contract rather than a title
+   D. A lease is a registered title that can be mortgaged to a bank
+   Correct: C
+   Explanation: The source frames the trade-off clearly: leases are cheaper and unrestricted but give contractual rights, not a registered title. That is why it urges buyers to read what the certificate actually says before comparing prices.
+   Source: Buy property in Indonesia for $70k-350k (2026) (https://www.dh-realting.com/en/insights/what-can-you-buy-in-indonesia-for-70-000-350-000-2026)
 
-5. BPHTB is a tax paid in Indonesia when a buyer does what?
-   A. Rents out a property for the first time
-   B. Renovates a house above a certain size
-   C. Acquires land or building rights, such as buying a house
-   D. Lists a property for sale online
-   Correct answer: C
-   Explanation: BPHTB (Bea Perolehan Hak atas Tanah dan Bangunan) is the duty paid when someone acquires rights over land or a building, including a normal house purchase.
-   Source: Panduan Properti Jakarta | Rumah123 - https://www.rumah123.com/panduan-properti/
+Q4. For a foreign buyer working with a budget of roughly $70,000–350,000, what does the source say about Jakarta specifically?
+   A. Jakarta is the only Indonesian market where foreigners may buy below $100,000
+   B. Jakarta fixes every foreign purchase at exactly $170,000 per unit
+   C. The minimum purchase price for foreigners can shut Jakarta out below about $170,000
+   D. Jakarta imposes no minimum price on foreigners, unlike Bali
+   Correct: C
+   Explanation: The source uses the foreigner minimum price as the reason a mid-sized budget may not stretch to Jakarta at all, with roughly $170,000 as the threshold. The minimum price is a state rule, not a per-unit price cap or a Bali-only restriction.
+   Source: Buy property in Indonesia for $70k-350k (2026) (https://www.dh-realting.com/en/insights/what-can-you-buy-in-indonesia-for-70-000-350-000-2026)
 
-6. What does transit-oriented development (TOD) mean for a Jakarta property near an MRT or LRT station?
-   A. The building is only for transit workers
-   B. Homes, offices and shops are built close to the station so residents can walk to transit
-   C. The property cannot be sold for ten years
-   D. The building must include a bus terminal inside it
-   Correct answer: B
-   Explanation: TOD clusters housing, offices and shops within walking distance of a transit station, so residents rely less on cars. That walkability is why TOD apartments in Jakarta command a premium.
-   Source: Jakarta Property Market Highlights | Knight Frank Indonesia - https://www.knightfrank.co.id/research/jakarta-property-market
+Q5. According to the Bank Indonesia data cited in the source, how much did Greater Jakarta residential prices rise year-on-year in Q1 2025?
+   A. 1.96%
+   B. 0.47%
+   C. 1.07%
+   D. 1.39%
+   Correct: C
+   Explanation: Q1 2025 growth was 1.07%. The 1.39% figure belongs to Q4 2024 and 1.96% to Q3 2023, while 0.47% refers to a real-terms decline.
+   Source: Buying real estate in Jakarta (https://www.remoters.io/en/purchase/jakarta)
 
-7. Why should a buyer always check a Jakarta property's flood history before buying?
-   A. Flood history determines the property tax rate
-   B. Flood-prone locations suffer damage, higher insurance costs and lower resale value
-   C. Flooded areas are illegal to sell in Jakarta
-   D. Flood history is only relevant for apartments above the 10th floor
-   Correct answer: B
-   Explanation: Jakarta has well-known flood-prone pockets. A flood history means repair costs, harder insurance and buyers who discount the price, so it directly affects value.
-   Source: Pasar Properti Jakarta 2025 | 99.co - https://www.99.co/id/panduan/pasar-properti-jakarta/
+Q6. What does the run of Bank Indonesia growth figures from Q3 2023 through Q1 2025 indicate about Greater Jakarta's residential market?
+   A. Nominal prices have been falling sharply quarter after quarter
+   B. Growth has accelerated in each successive quarter
+   C. Price growth has been moderate but steadily decelerating
+   D. Prices have been completely flat, recording zero growth
+   Correct: C
+   Explanation: Growth slipped from 1.96% to 1.39% to 1.07%, which the source summarises as moderate and decelerating. Prices were still rising in nominal terms, so a sharp fall is the wrong reading.
+   Source: Buying real estate in Jakarta (https://www.remoters.io/en/purchase/jakarta)
 
-8. What is the main trade-off when choosing a landed house over an apartment in Jakarta?
-   A. A landed house has land ownership and more space, but usually sits further from the city centre
-   B. A landed house is always cheaper than any apartment
-   C. A landed house needs no certificate at all
-   D. A landed house can never be rented out
-   Correct answer: A
-   Explanation: A landed house gives you the land itself and more living space, but affordable landed houses tend to be in outer Jakarta, so the commute is longer than from a central apartment.
-   Source: Jakarta Property Market | JLL Indonesia - https://www.jll.co.id/en/trends-and-insights/research/jakarta-property-market
+Q7. On top of the agreed sale price, how much should a Jakarta buyer budget for acquisition costs such as BPHTB, notary and legal fees, and VAT?
+   A. 15% to 20% of the property value
+   B. 9.5% to 14% of the property value
+   C. 6.5% to 9% of the property value
+   D. 1% to 2% of the property value
+   Correct: C
+   Explanation: The source benchmarks total buyer-side acquisition costs at 6.5% to 9% of value. The 9.5% to 14% range is the separate round-trip cost of buying and reselling.
+   Source: Buying real estate in Jakarta (https://www.remoters.io/en/purchase/jakarta)
 
-9. When an agent prepares a comparative market analysis (CMA) for a Jakarta seller, what does the agent mainly use?
-   A. The seller's original purchase price from ten years ago
-   B. Recent sale prices of similar nearby properties
-   C. The asking prices of luxury homes in another city
-   D. The construction cost of the building alone
-   Correct answer: B
-   Explanation: A CMA estimates a fair listing price from recent sales of comparable homes nearby, adjusted for size, condition and location. The old purchase price or another city's prices do not set today's market value.
-   Source: Panduan Properti Jakarta | Rumah123 - https://www.rumah123.com/panduan-properti/
+Q8. What is the estimated round-trip cost of buying a Jakarta property and then reselling it?
+   A. Roughly 1% to 2%
+   B. Roughly 6.5% to 9%
+   C. Roughly 3% to 5%
+   D. Roughly 9.5% to 14%
+   Correct: D
+   Explanation: The source puts the full buy-then-sell cost at roughly 9.5% to 14%. The narrower 6.5% to 9% band covers only buyer-side acquisition costs.
+   Source: Buying real estate in Jakarta (https://www.remoters.io/en/purchase/jakarta)
 
-10. Since April 2022, what is the standard VAT (PPN) rate applied to new property sales in Indonesia?
-   A. 5%
-   B. 10%
-   C. 11%
-   D. 15%
-   Correct answer: C
-   Explanation: Indonesia raised VAT from 10% to 11% in April 2022, and that 11% rate applies to taxable property sales. Buyers should budget for it on top of the headline price.
-   Source: Residential Property Price Survey | Bank Indonesia - https://www.bi.go.id/en/publikasi/laporan/Pages/Survei-Harga-Properti-Residensial.aspx
+Q9. What was Jakarta's citywide average residential price as of mid-2025?
+   A. Approximately IDR 5 million per square meter
+   B. Approximately IDR 12 million per square meter
+   C. Approximately IDR 50 million per square meter
+   D. Approximately IDR 25 million per square meter
+   Correct: D
+   Explanation: The source cites a citywide average of about IDR 25 million per square meter in mid-2025. It also stresses that this average masks wide variation between locations and buildings.
+   Source: Buying real estate in Jakarta (https://www.remoters.io/en/purchase/jakarta)
+
+Q10. According to Colliers, what is primarily driving Jakarta apartment price growth?
+   A. Rapidly rising rental yields
+   B. End-user demand
+   C. Speculative buying by investors
+   D. Bulk purchases by foreign buyers
+   Correct: B
+   Explanation: Colliers attributes growth mainly to end users, noting that investors are directing capital to more liquid asset classes, which limits speculative pressure on residential values.
+   Source: CBD leads Jakarta apartment price gains but growth remains uneven (https://realestateasia.com/residential/news/cbd-leads-jakarta-apartment-price-gains-growth-remains-uneven)
