@@ -1,0 +1,10 @@
+Topic: {topic}
+Quiz language: {language}
+Audience: 99 Group employees
+Today's date: {today}
+Mode: {mode}
+Number of questions to write: {n_generate}
+
+{sources_block}
+
+Write the quiz now. Return only the JSON object.
