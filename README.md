@@ -78,11 +78,13 @@ bounds the worst-case bill. See `docs/architecture.md` for the full detail.
 ## Key decisions
 
 - **Free model first, paid as fallback.** The free Gemma tier on OpenRouter
-  costs nothing, so most quizzes are free. The paid fallbacks exist only so
-  a rate limit or outage on the free tier does not leave the user with
-  nothing. Measured cost per generated quiz is a few hundred rupiah at most
-  when the free tier answers; the paid fallback is about Rp 4-5 per quiz
-  generation (one LLM call).
+  costs nothing, so most quizzes are free — when it is not rate-limited.
+  The paid fallbacks exist only so a rate limit or outage on the free tier
+  does not leave the user with nothing. A paid quiz generation is one LLM
+  call: roughly Rp 9 (DeepSeek V4 Flash) to Rp 15 (GPT-6 Luna) at the listed
+  per-token prices for a typical input (~2,700 tokens of prompt + sources)
+  and output (~3,500 tokens of JSON) — an estimate from the price list, not
+  a measured bill. The paid daily cap (300 calls) bounds the worst case.
 - **No vector database, no framework.** Retrieval is plain web search plus
   code validation. A vector database would add a hosted dependency and cost
   for a demo whose corpus is the live web, not a fixed document set.
@@ -128,9 +130,32 @@ the time available.
   `bing.com/ck/a?...` redirects, not the article URL, so a Bing fallback
   would need an extra resolution step before fetching.
 - **The free model tier rate-limits.** The OpenRouter free Gemma tier
-  returned 429 during testing, which is exactly why the fallback chain
-  exists — the paid Vikey tiers answered immediately. Nothing to fix, but
-  it confirms the chain order matters more than the free tier's raw speed.
+  returned 429 on every sample-generation attempt, which is exactly why the
+  fallback chain exists — the paid Vikey tiers answered instead. Nothing to
+  fix, but it confirms the chain order matters more than the free tier's raw
+  speed.
+- **The paid tiers are slow and flaky on long generations.** A 12-question
+  JSON is a long output: GPT-6 Luna timed out twice at the old 40-second
+  limit and once at 90 seconds, and DeepSeek V4 Flash timed out once and
+  returned a 502 once. The fixes were raising the per-tier timeouts
+  (OpenRouter 25s to 60s, Vikey 40s to 90s) and raising max_tokens from
+  4,000 to 8,000 — a 4,000-token limit cut the JSON off mid-string. A
+  response cut off by the token limit is now treated as a failed tier so
+  the chain moves on instead of handing a truncated blob to the validator.
+- **A literal JSON example in the repair prompt broke Python's `.format()`.**
+  The repair prompt template contained `{"questions":[...]}` as an example,
+  and `.format()` read it as a placeholder, raising `KeyError: '"questions"'`
+  every time the repair loop ran. The Jakarta sample never hit it (all 12
+  questions passed first time, so no repair ran); the skills sample failed
+  three times in a row before the cause was found. The fix is doubling the
+  braces (`{{"questions":[...]}}`) in the template. The system prompt's
+  JSON example is safe because it is loaded as-is, never formatted.
+- **Two of the four skills sources refused to load.** Both Indeed pages
+  (in.indeed.com, au.indeed.com) returned 403 Forbidden, so the skills
+  sample is grounded in the two remaining sources (Engel & Völkers, IQI
+  Global) — still enough for grounded mode, and every question still cites
+  a source. If a topic's sources all refuse, the quiz degrades to
+  ungrounded mode and says so.
 - **Cold start on the free Render tier.** The backend sleeps after ~15
   minutes idle and takes about 50 seconds to wake. The frontend hides this
   with a "Waking generator..." chip and retries the health check every 5
