@@ -6,14 +6,20 @@ generation and 0.2/8000 for repair, and it returns the raw text (a JSON
 object) instead of a chat answer. The UI model-choice ("prefer") machinery
 from Section 3 is dropped: the quiz pipeline always uses the auto chain.
 
-The chain is Vikey-only (changed 2026-11-07 on Nero's order: "langsung
-pake vikey aja, jangan openrouter gemma"). OpenRouter's free Gemma tier was
-dropped because its upstream shared pool rate-limits constantly (HTTP 429),
-which made whole generations fail whenever Vikey also hiccupped. Vikey is
-paid but cheap (~Rp 4/answer) and reliable.
+The chain is Vikey-first, with an OpenRouter backup as a last resort
+(changed 2026-11-07 ~15:35: Vikey returns empty responses from this
+Render service even though the same key works from the Section 3 service
+and from a direct call, so a Vikey-only chain leaves the generator dead
+when Vikey hiccups from Render. The backup is OpenRouter's PAID DeepSeek
+V4 Flash, NOT the free Gemma tier: Gemma stays removed, per Nero's order,
+because its upstream shared pool rate-limits constantly. The backup only
+runs if both Vikey tiers fail, so a normal generation still uses Vikey
+and costs ~Rp 4-5.)
 
 Tier 1: Vikey openai/gpt-6-luna (paid, ~Rp 4/answer).
 Tier 2: Vikey deepseek/deepseek-v4-flash (paid, ~Rp 5/answer).
+Tier 3: OpenRouter deepseek/deepseek-v4-flash (paid, ~$0.0002/answer;
+  last resort only, runs only if both Vikey tiers fail).
 
 One attempt per tier; the next tier is the retry. A tier that fails gets a
 cooldown so later requests skip it instead of waiting on a call that will
@@ -33,6 +39,10 @@ import httpx
 
 log = logging.getLogger("quizgen.llm")
 
+OR_URL = "https://openrouter.ai/api/v1/chat/completions"
+# Last-resort backup only (NOT the free Gemma tier). Paid DeepSeek V4
+# Flash via OpenRouter, same model family as the Vikey Flash tier.
+OR_MODEL_DEFAULT = "deepseek/deepseek-v4-flash"
 VIKEY_MODEL_DEFAULT = "openai/gpt-6-luna"
 VIKEY_MODEL_FALLBACK_DEFAULT = "deepseek/deepseek-v4-flash"
 
@@ -42,7 +52,8 @@ PRICE_IDR = {
     "deepseek/deepseek-v4-flash": (1080, 1800),
 }
 
-CHAIN_MODELS = [VIKEY_MODEL_DEFAULT, VIKEY_MODEL_FALLBACK_DEFAULT]
+CHAIN_MODELS = [VIKEY_MODEL_DEFAULT, VIKEY_MODEL_FALLBACK_DEFAULT,
+                OR_MODEL_DEFAULT]
 
 _client = httpx.Client()
 _cooldown: dict[str, float] = {}
@@ -88,16 +99,33 @@ def _vikey_tier(name, env, default):
                  os.getenv(env, default), 90.0)
 
 
+def _openrouter_tier():
+    """Last-resort backup tier (paid DeepSeek V4 Flash, NOT free Gemma).
+    Only runs if both Vikey tiers fail. Marked 'paid' so the daily cap
+    applies; its cost is not in PRICE_IDR (OpenRouter prices in USD), so
+    est_cost_idr reports 0.0 for this tier."""
+    if not os.getenv("OPENROUTER_API_KEY"):
+        return None
+    return _tier("openrouter", "openrouter", "paid", OR_URL,
+                 os.environ["OPENROUTER_API_KEY"],
+                 os.getenv("OPENROUTER_MODEL", OR_MODEL_DEFAULT), 90.0,
+                 {"HTTP-Referer": "https://github.com/mirzasnowy/99-quiz-builder",
+                  "X-Title": "99 Quiz Builder (99 Group AI Challenge, Section 2)"})
+
+
 def build_chain():
     """The default tier list from env. A tier whose key is missing is skipped.
-    Vikey-only: the OpenRouter free Gemma tier was removed 2026-11-07
-    (upstream shared-pool rate limits made it unreliable)."""
+    Vikey first (Luna, then Flash); OpenRouter paid DeepSeek last, only as
+    a backup if both Vikey tiers fail. The free Gemma tier stays removed."""
     chain = []
     for tier in (_vikey_tier("vikey-luna", "VIKEY_MODEL", VIKEY_MODEL_DEFAULT),
                  _vikey_tier("vikey-flash", "VIKEY_MODEL_FALLBACK",
                              VIKEY_MODEL_FALLBACK_DEFAULT)):
         if tier:
             chain.append(tier)
+    t = _openrouter_tier()
+    if t:
+        chain.append(t)
     return chain
 
 
