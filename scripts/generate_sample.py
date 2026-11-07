@@ -33,7 +33,13 @@ def quiz_to_text(quiz):
         for letter in ("A", "B", "C", "D"):
             lines.append("   %s. %s" % (letter, q["options"][letter]))
         lines.append("   Correct: %s" % q["correct"])
+        lines.append("   Difficulty: %s | Grounded: %s"
+                     % (q.get("difficulty", "?"),
+                        "yes" if q.get("grounded") else "no"))
         lines.append("   Explanation: %s" % q["explanation"])
+        if q.get("evidence"):
+            lines.append("   Evidence (verbatim from source): \"%s\""
+                         % q["evidence"])
         if q.get("source_url"):
             lines.append("   Source: %s (%s)"
                          % (q["source_title"], q["source_url"]))
